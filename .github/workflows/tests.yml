@@ -41,16 +41,15 @@ jobs:
           restore-keys: |
             test-py${{ matrix.python-version }}
 
-      # - name: Conda init
-      #   run: |
-      #     ls /usr/share/miniconda3
-      #     ls /usr/share/miniconda3/etc
-      #     ls /usr/share/miniconda3/etc/profile.d
-      #     ls /usr/share/miniconda3/etc/profile.d/conda.sh 
-      #     source /usr/share/miniconda3/etc/profile.d/mamba.sh 
-      #     mamba activate base
-      #     mamba info 
-      #     mamba list
+      - name: Conda init
+        run: |
+          ls /usr/share/miniconda3
+          ls /usr/share/miniconda3/etc
+          ls /usr/share/miniconda3/etc/profile.d
+          source /usr/share/miniconda3/etc/profile.d/mamba.sh 
+          mamba activate base
+          mamba info 
+          mamba list
 
       # - name: Setup Mambaforge
       #   uses: conda-incubator/setup-miniconda@v2
@@ -62,7 +61,7 @@ jobs:
 
       - name: Update environment
         if: steps.cache.outputs.cache-hit != 'true'
-        run: conda env update -n hydromt -f environment.yml
+        run: mamba env update -n hydromt -f environment.yml
 
       - name: Test
-        run: conda run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        run: mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
