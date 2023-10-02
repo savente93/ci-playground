@@ -49,7 +49,6 @@ jobs:
           source /usr/share/miniconda3/etc/profile.d/mamba.sh 
           mamba activate base
           mamba info 
-          mamba list
 
       # - name: Setup Mambaforge
       #   uses: conda-incubator/setup-miniconda@v2
