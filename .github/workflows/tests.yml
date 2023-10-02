@@ -43,10 +43,10 @@ jobs:
 
       - name: Conda init
         run: |
-          source /usr/share/miniconda3/etc/profile.d/conda.sh
-          mamba activate base
-          mamba info 
-          mamba list
+          source /usr/share/miniconda3/etc/profile.d/conda.sh 
+          conda activate base
+          conda info 
+          conda list
 
       # - name: Setup Mambaforge
       #   uses: conda-incubator/setup-miniconda@v2
