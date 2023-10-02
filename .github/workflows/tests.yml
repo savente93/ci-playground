@@ -2,8 +2,6 @@ name: Tests
 
 on:
   push:
-    braches:
-      - '!main'
 
 jobs:
   build:
@@ -41,24 +39,9 @@ jobs:
           restore-keys: |
             test-py${{ matrix.python-version }}
 
-      - name: Conda init
-        run: |
-          echo "start path:" $PATH
-          source /usr/share/miniconda3/etc/profile.d/conda.sh 
-          source /usr/share/miniconda3/etc/profile.d/mamba.sh 
-          export PATH=/usr/share/miniconda3/bin:$PATH
-          mamba activate base
-          mamba info 
-          echo "end path: "$PATH
-
-      # - name: Setup Mambaforge
-      #   uses: conda-incubator/setup-miniconda@v2
-      #   with:
-      #       python-version: ${{ matrix.python-version }}
-      #       miniforge-variant: Mambaforge
-      #       miniforge-version: latest
-      #       use-mamba: true
-
+      # by avoiding the mamba setup stage by loading it from cache instead we save
+      # a lot of setup time, but we do have to do our own PATH management
+      # hence the exports
       - name: Update environment
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
