@@ -13,7 +13,7 @@ jobs:
 
       - name: Cleanup caches
         run: |
-          if [ gh cache list | grep -q "No cache"; then
+          if gh cache list | grep -q "No cache"; then
             gh cache delete -a
           else
             echo "No caches found. skipping..."
