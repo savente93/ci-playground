@@ -72,7 +72,6 @@ jobs:
             miniforge-variant: Mambaforge
             miniforge-version: latest
             channels: conda-forge
-            activate-environment: hydromt
             use-mamba: true
 
       - name: Setup env
