@@ -45,6 +45,7 @@ jobs:
         run: |
           source /usr/share/miniconda3/etc/profile.d/conda.sh 
           source /usr/share/miniconda3/etc/profile.d/mamba.sh 
+          export PATH=/usr/share/miniconda3/bin:$PATH
           mamba activate base
           mamba info 
 
