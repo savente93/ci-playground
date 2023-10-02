@@ -43,12 +43,10 @@ jobs:
 
       - name: Conda init
         run: |
-          /usr/share/miniconda3/bin/mamba init bash
-          source ~/.bashrc
-
-      - name: activate conda 
-        run: |
-          /usr/share/miniconda3/bin/mamba activate base
+          source /usr/share/miniconda3/etc/profile.d/conda.sh
+          mamba activate base
+          mamba info 
+          mamba list
 
       # - name: Setup Mambaforge
       #   uses: conda-incubator/setup-miniconda@v2
