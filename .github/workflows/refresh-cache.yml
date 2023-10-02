@@ -7,6 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  clear-cache:
+    uses: ./.github/workflows/purge_all_caches.yml
   refresh-cache:
     defaults:
       run:
@@ -18,7 +20,6 @@ jobs:
         python-version: ['3.10','3.11']
     name: py ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
-    uses: ./.github/workflows/purge_all_caches.yml
     # note absence of cucurrency, this one should only be run one at a time
     steps:
       - uses: actions/checkout@v3
