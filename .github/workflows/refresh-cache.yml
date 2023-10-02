@@ -9,7 +9,8 @@ on:
 jobs:
   clear-cache:
     uses: ./.github/workflows/purge_all_caches.yml
-  refresh-cache:
+  rebuild-cache:
+    needs: clear-cache
     defaults:
       run:
         shell: bash -l {0}
