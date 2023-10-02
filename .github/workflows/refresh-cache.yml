@@ -58,9 +58,9 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-      env:
-        DOC_PYTHON_VERSION: '3.11'
       runs-on: ubuntu-latest
+    env:
+      DOC_PYTHON_VERSION: '3.11'
     steps:
       - name: checkout code
         uses: actions/checkout@v3
