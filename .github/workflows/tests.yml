@@ -43,6 +43,7 @@ jobs:
 
       - name: Setup Mambaforge from cache
         run: |
+          cat ~/.bashrc 
           source ~/.bashrc 
 
       # - name: Setup Mambaforge
