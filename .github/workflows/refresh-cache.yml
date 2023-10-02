@@ -7,7 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  clear-cache:
+    uses: ./.github/workflows/purge_all_caches.yml
+  rebuild-cache:
+    needs: clear-cache
     defaults:
       run:
         shell: bash -l {0}
@@ -15,21 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        # python-version: ['3.9','3.10','3.11']
-        python-version: ['3.10'] # just for testing now
+        python-version: ['3.10','3.11']
     name: py ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     # note absence of cucurrency, this one should only be run one at a time
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cleanup caches
-        continue-on-error: true
-        run: |
-          gh cache delete -a
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
