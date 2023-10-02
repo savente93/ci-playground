@@ -7,3 +7,7 @@ def test_random_add_one(random_int):
 
 def test_fav_color():
     print("I like blue :)")
+
+
+def test_polars():
+    import polars as pl
