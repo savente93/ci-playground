@@ -13,7 +13,8 @@ jobs:
 
       - name: Cleanup caches
         run: |
-          gh cache delete -a
-        continue-on-error: true
+          if [ $(gh cache list | grep "No cache") ]; then
+            gh cache delete -a
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
