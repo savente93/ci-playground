@@ -22,7 +22,7 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: load from cache 
+      - name: load from cache
         uses: actions/cache/restore@v3
         with:
           path: /usr/share/miniconda3/envs/hydromt
@@ -42,9 +42,8 @@ jobs:
         run: mamba run -n hydromt python make_env.py test,io,extra -p ${{ matrix.python-version}} -n hydromt
 
       # since we all just load from one cache now, we always update the environment
-      - name: Update environment 
+      - name: Update environment
         run: mamba env update -n hydromt -f environment.yml
 
       - name: Test
         run: mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
-
