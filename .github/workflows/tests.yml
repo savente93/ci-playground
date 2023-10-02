@@ -43,6 +43,8 @@ jobs:
 
       - name: Setup Mambaforge from cache
         run: |
+          /usr/share/miniconda3/bin/conda init bash
+          source ~/.bashrc
           /usr/share/miniconda3/bin/conda activate base
 
       # - name: Setup Mambaforge
