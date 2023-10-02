@@ -41,7 +41,7 @@ jobs:
             test-py${{ matrix.python-version }}
 
       - name: Fail on no cache restore
-        if: steps.cache.out.cache-matched-key == ''
+        if: steps.cache.outputs.cache-matched-key == '' 
         run: |
           echo "Failed to restore any cache. exiting..."
           exit 1
