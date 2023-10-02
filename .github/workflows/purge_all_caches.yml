@@ -14,6 +14,6 @@ jobs:
       - name: Cleanup caches
         run: |
           gh cache delete -a
-        continue-on-failure: true
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
