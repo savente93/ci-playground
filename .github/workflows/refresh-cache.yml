@@ -3,7 +3,7 @@ name: Refrech CI cache
 
 on:
   schedule:
-    - cron: 0 0 * * Sun # runs on main by default
+    - cron: 0 0 * * Sun # run on main every sunday at 00:00 
   workflow_dispatch:
 
 jobs:
@@ -58,7 +58,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     env:
       DOC_PYTHON_VERSION: '3.11'
     steps:
@@ -68,11 +68,10 @@ jobs:
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            python-version: $DOC_PYTHON_VERSION
+            python-version: ${{ env.DOC_PYTHON_VERSION }}
             miniforge-variant: Mambaforge
             miniforge-version: latest
             channels: conda-forge
-            activate-environment: hydromt
             use-mamba: true
 
       - name: Setup env
@@ -84,7 +83,7 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Generate docs
-        run: PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt python -m sphinx-build docs docs/build
+        run: PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt sphinx-build docs/source docs/_build
 
       - name: Upload cache
         uses: actions/cache/save@v3
@@ -92,6 +91,6 @@ jobs:
           path: | 
             /usr/share/miniconda3
             ~/pycache
-            ~/docs
+            ~/docs/_build
           key: docs-${{ hashFiles('environment.yml')  }}
         id: docs-cache
