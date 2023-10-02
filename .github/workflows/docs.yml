@@ -2,24 +2,7 @@
 name: Build Documentation
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - tests/*
-      - hydromt/*
-      - data/*
-      - docs/*
-      - examples/*
-      - pyproject.toml
-  pull_request:
-    branches: [main]
-    paths:
-      - tests/*
-      - hydromt/*
-      - data/*
-      - docs/*
-      - examples/*
-      - pyproject.toml
+  workflow_dispatch:
 
 jobs:
   Docs:
