@@ -21,12 +21,8 @@ jobs:
       group: ${{ github.workflow }}-${{ matrix.python-version }}-${{ github.ref }}
       cancel-in-progress: true
     steps:
-
-      - uses: actions/checkout@v3
-
-      # we need environment.yml to see if we have a cache hit
-      - name: Generate env spec
-        run: pip install tomli && python make_env.py test,io,extra -p ${{ matrix.python-version}} -n hydromt
+      - name: checkout code
+        uses: actions/checkout@v3
 
       - name: load from cache
         id: cache
@@ -37,9 +33,9 @@ jobs:
             ~/pycache
           # the below two settings mean we'll alway srestore the cache
           # but the cache hit output can tell us if we have to update afterwards
-          key: test-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
+          key: docs-${{ hashFiles('environment.yml')  }}
           restore-keys: |
-            test-py${{ matrix.python-version }}
+            docs
 
       - name: Fail on no cache restore
         if: steps.cache.outputs.cache-matched-key == '' 
@@ -56,82 +52,9 @@ jobs:
           export PATH=/usr/share/miniconda3/bin:$PATH
           mamba env update -n hydromt -f environment.yml
 
-      - name: Test
+
+      # run tests first so that we can also cache all of the artefacts
+      - name: Generate docs
         run: |
           export PATH=/usr/share/miniconda3/bin:$PATH
-          PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
-
-on:
-  workflow_dispatch:
-
-jobs:
-  Docs:
-    name: linux docs
-    runs-on: ubuntu-latest
-    env:
-      DOC_VERSION: dev
-    defaults:
-      run:
-        shell: bash -l {0}
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
-    timeout-minutes: 15
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-            python-version: 3.11
-            miniforge-variant: Mambaforge
-            miniforge-version: latest
-            channels: conda-forge
-            activate-environment: hydromt
-            use-mamba: true
-      - name: Generate env spec
-        run: python make_env.py doc
-
-
-      - name: Set cache date
-        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
-
-      - name: load from cache if it exists for our environment
-        uses: actions/cache@v3
-        with:
-          path: /usr/share/miniconda3/envs/hydromt
-          key: docs-conda-${{ hashFiles('environment.yml') }}-${{ env.DATE }}
-        id: cache
-
-      - name: Update environment & write to cache
-        run: mamba env update -n hydromt -f environment.yml
-        if: steps.cache.outputs.cache-hit != 'true'
-
-      - name: Install hydromt
-        run: pip install .
-
-      - name: test docs
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          make html_test
-
-      - name: Build docs
-        if: ${{ github.event_name != 'pull_request' && !github.event.act }}
-        run: |
-          make html
-
-
-      - name: Set doc version
-        run: echo "DOC_VERSION=$(python -c 'from hydromt import __version__ as v; print("dev" if "dev" in v else "v"+v.replace(".dev",""))')" >> $GITHUB_ENV
-
-      - name: Upload to GitHub Pages
-        if: ${{ github.event_name != 'pull_request' && !github.event.act }}
-        uses: peaceiris/actions-gh-pages@v3.8.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/_build/html
-          exclude_assets: .buildinfo,_sources/*,_examples/*.ipynb
-          destination_dir: ./${{ env.DOC_VERSION }}
-          keep_files: false
-          full_commit_message: Deploy ${{ env.DOC_VERSION }} to GitHub Pages
+          PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt python -m sphinx-build docs docs/build -b dummy
