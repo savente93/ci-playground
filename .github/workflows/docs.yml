@@ -49,4 +49,4 @@ jobs:
       - name: Generate docs
         run: |
           export PATH=/usr/share/miniconda3/bin:$PATH
-          PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt python -m sphinx-build docs docs/build -b dummy
+          PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt sphinx-build docs docs/build -b dummy
