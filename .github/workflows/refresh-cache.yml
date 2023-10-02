@@ -15,7 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.9','3.10','3.11']
+        # python-version: ['3.9','3.10','3.11']
+        python-version: ['3.9'] # just for testing now
     name: py ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     # note absence of cucurrency, this one should only be run one at a time
@@ -35,12 +36,11 @@ jobs:
             python-version: ${{ matrix.python-version }}
             miniforge-variant: Mambaforge
             miniforge-version: latest
-            activate-environment: hydromt
             use-mamba: true
 
       - name: Setup env
         run: |
-          mamba run -n hydromt pip install tomli
+          pip install tomli
           mamba run -n hydromt python make_env.py test,io,extra -p ${{ matrix.python-version}} -n hydromt
           mamba env create -f environment.yml
           mamba run -n hydromt pip install -e .
