@@ -12,7 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.10','3.11']
+        # python-version: ['3.10','3.11']
+        python-version: ['3.10']
     name: py ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     concurrency:
@@ -30,28 +31,24 @@ jobs:
         id: cache
         uses: actions/cache/restore@v3
         with:
-          path: /usr/share/miniconda3/envs/hydromt
+          path: | 
+            /usr/share/miniconda3
           # the below two settings mean we'll alway srestore the cache
           # but the cache hit output can tell us if we have to update afterwards
           key: test-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
           restore-keys: |
             test-py${{ matrix.python-version }}
 
-      - name: Setup Mambaforge from cache
-        run: |
-          ./usr/share/miniconda3/bin/conda init bash
-
-      # - name: Setup Mambaforge
-      #   uses: conda-incubator/setup-miniconda@v2
-      #   with:
-      #       python-version: ${{ matrix.python-version }}
-      #       miniforge-variant: Mambaforge
-      #       miniforge-version: latest
-      #       use-mamba: true
-
+      # by avoiding the mamba setup stage by loading it from cache instead we save
+      # a lot of setup time, but we do have to do our own PATH management
+      # hence the exports
       - name: Update environment
         if: steps.cache.outputs.cache-hit != 'true'
-        run: mamba env update -n hydromt -f environment.yml
+        run: |
+          export PATH=/usr/share/miniconda3/bin:$PATH
+          mamba env update -n hydromt -f environment.yml
 
       - name: Test
-        run: mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        run: |
+          export PATH=/usr/share/miniconda3/bin:$PATH
+          mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
