@@ -1,4 +1,3 @@
-import pytest
 from playground.math import add_one
 
 
