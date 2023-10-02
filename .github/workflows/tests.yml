@@ -42,7 +42,9 @@ jobs:
 
       - name: Fail on no cache restore
         if: steps.cache.out.cache-matched-key == ''
-        run: exit 1
+        run: |
+          echo "Failed to restore any cache. exiting..."
+          exit 1
 
       # by avoiding the mamba setup stage by loading it from cache instead we save
       # a lot of setup time, but we do have to do our own PATH management
