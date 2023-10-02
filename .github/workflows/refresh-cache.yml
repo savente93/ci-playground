@@ -3,7 +3,7 @@ name: Refrech CI cache
 
 on:
   schedule:
-    - cron: 0 0 * * Sun # runs on main by default
+    - cron: 0 0 * * Sun # run on main every sunday at 00:00 
   workflow_dispatch:
 
 jobs:
