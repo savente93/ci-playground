@@ -34,8 +34,8 @@ jobs:
           # the below two settings mean we'll alway srestore the cache
           # but the cache hit output can tell us if we have to update afterwards
           key: test-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
-          restore-keys: 
-            - test-py${{ matrix.python-version }}
+          restore-keys: |
+            test-py${{ matrix.python-version }}
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
