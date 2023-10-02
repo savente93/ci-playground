@@ -83,7 +83,7 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Generate docs
-        run: PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt sphinx-build docs/source docs/build
+        run: PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt sphinx-build docs/source docs/_build
 
       - name: Upload cache
         uses: actions/cache/save@v3
@@ -91,6 +91,6 @@ jobs:
           path: | 
             /usr/share/miniconda3
             ~/pycache
-            ~/docs/build
+            ~/docs/_build
           key: docs-${{ hashFiles('environment.yml')  }}
         id: docs-cache
