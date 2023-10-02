@@ -41,10 +41,12 @@ jobs:
           restore-keys: |
             test-py${{ matrix.python-version }}
 
-      - name: Setup Mambaforge from cache
+      - name: Conda init
         run: |
           /usr/share/miniconda3/bin/conda init bash
-          source ~/.bashrc
+
+      - name: activate conda 
+        run: |
           /usr/share/miniconda3/bin/conda activate base
 
       # - name: Setup Mambaforge
