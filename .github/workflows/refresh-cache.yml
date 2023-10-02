@@ -68,7 +68,7 @@ jobs:
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            python-version: $DOC_PYTHON_VERSION
+            python-version: ${{ env.DOC_PYTHON_VERSION }}
             miniforge-variant: Mambaforge
             miniforge-version: latest
             channels: conda-forge
