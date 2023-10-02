@@ -23,6 +23,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cleanup caches
+        continue-on-error: true
         run: |
           gh cache delete -a
         env:
