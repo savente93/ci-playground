@@ -40,6 +40,7 @@ jobs:
 
       - name: Setup env
         run: |
+          mamba run -n hydromt pip install tomli
           mamba run -n hydromt python make_env.py test,io,extra -p ${{ matrix.python-version}} -n hydromt
           mamba env create -f environment.yml
           mamba run -n hydromt pip install -e .
