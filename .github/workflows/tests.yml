@@ -37,13 +37,17 @@ jobs:
           restore-keys: |
             test-py${{ matrix.python-version }}
 
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-            python-version: ${{ matrix.python-version }}
-            miniforge-variant: Mambaforge
-            miniforge-version: latest
-            use-mamba: true
+      - name: Setup Mambaforge from cache
+        run: |
+          ./usr/share/miniconda3/bin/conda init bash
+
+      # - name: Setup Mambaforge
+      #   uses: conda-incubator/setup-miniconda@v2
+      #   with:
+      #       python-version: ${{ matrix.python-version }}
+      #       miniforge-variant: Mambaforge
+      #       miniforge-version: latest
+      #       use-mamba: true
 
       - name: Update environment
         if: steps.cache.outputs.cache-hit != 'true'
