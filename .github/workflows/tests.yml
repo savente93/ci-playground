@@ -44,6 +44,7 @@ jobs:
       - name: Conda init
         run: |
           /usr/share/miniconda3/bin/conda init bash
+          source ~/.bashrc
 
       - name: activate conda 
         run: |
