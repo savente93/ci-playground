@@ -3,6 +3,7 @@ name: Build Documentation
 
 on:
   push:
+    branches: [main]
 
 jobs:
   test-docs:
@@ -66,7 +67,7 @@ jobs:
 
       - name: Upload to GitHub Pages
         if: ${{ github.event_name != 'pull_request' && !github.event.act }}
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build/html
