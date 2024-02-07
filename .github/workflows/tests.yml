@@ -19,7 +19,7 @@ jobs:
           - os: windows-latest
             miniconda-path: /c/Miniconda3
           - os: ubuntu-latest
-            miniconda-path: /usr/share/miniconda3
+            miniconda-path: ~/miniconda3
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     concurrency:
@@ -48,8 +48,8 @@ jobs:
             test-${{ matrix.os }}-py${{ matrix.python-version }}
             test-${{ matrix.os }}
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       - name: Fail on no cache restore
         if: steps.cache.outputs.cache-matched-key == '' 
