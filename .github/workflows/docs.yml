@@ -63,7 +63,7 @@ jobs:
       - name: Update environment
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          ${{ matrix.miniconda-path }}/condabin/mamba env update -n hydromt -f environment.yml
+          ~/miniconda3/condabin/mamba env update -n hydromt -f environment.yml
 
       # if we're not publishing we don't have to write them, so we might as well
       # save ourself a bunch of IO time
@@ -71,13 +71,13 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           export PATH=/usr/share/miniconda3/bin:$PATH
-          PYTHONPYCACHEPREFIX=~/pycache ${{ matrix.miniconda-path }}/condabin/mamba run -n hydromt sphinx-build docs/source docs/_build -b dummy
+          PYTHONPYCACHEPREFIX=~/pycache ~/miniconda3/condabin/mamba run -n hydromt sphinx-build docs/source docs/_build -b dummy
 
       - name: Generate docs
         if: ${{ github.event_name != 'pull_request' && !github.event.act }}
         run: |
           export PATH=/usr/share/miniconda3/bin:$PATH
-          PYTHONPYCACHEPREFIX=~/pycache ${{ matrix.miniconda-path }}/condabin/mamba run -n hydromt sphinx-build docs/source docs/_build
+          PYTHONPYCACHEPREFIX=~/pycache ~/miniconda3/condabin/mamba run -n hydromt sphinx-build docs/source docs/_build
           echo "DOC_VERSION=$(python -c 'from hydromt import __version__ as v; print("dev" if "dev" in v else "v"+v.replace(".dev",""))')" >> $GITHUB_ENV
 
       - name: Upload to GitHub Pages

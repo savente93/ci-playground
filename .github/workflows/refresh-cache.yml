@@ -24,9 +24,11 @@ jobs:
         python-version: ['3.10']
         include:
           - os: windows-latest
-            miniconda-path: /c/Miniconda3
+            miniconda-path: /c/users/runneradmin/miniconda3
+            pycache-path: /c/users/runneradmin/pycache
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
+            pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
@@ -51,15 +53,12 @@ jobs:
       - name: Test
         run: PYTHONPYCACHEPREFIX=~/pycache mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Upload cache
         uses: actions/cache/save@v4
         with:
           path: | 
             ${{ matrix.miniconda-path }}
-            ~/pycache
+            ${{ matrix.pycache-path }}
           key: test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
         id: test-cache
 

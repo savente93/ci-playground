@@ -17,9 +17,11 @@ jobs:
         python-version: ['3.10']
         include:
           - os: windows-latest
-            miniconda-path: /c/Miniconda3
+            miniconda-path: /c/users/runneradmin/miniconda3
+            pycache-path: /c/users/runneradmin/pycache
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
+            pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     concurrency:
@@ -39,7 +41,7 @@ jobs:
         with:
           path: | 
             ${{ matrix.miniconda-path }}
-            ~/pycache
+            ${{ matrix.pycache-path }}
           # the below two settings mean we'll always restore the cache
           # but the cache hit output can tell us if we have to update afterwards
           key: test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
