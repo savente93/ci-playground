@@ -41,7 +41,7 @@ jobs:
         with:
           path: | 
             ${{ matrix.miniconda-path }}
-            ${{ matrix.pycache-path }}
+          # ${{ matrix.pycache-path }}
           # the below two settings mean we'll always restore the cache
           # but the cache hit output can tell us if we have to update afterwards
           key: test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
