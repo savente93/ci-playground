@@ -51,7 +51,7 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Test
-        run: PYTHONPYCACHEPREFIX=${{pycache-path}} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path}} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
       - name: Upload cache
         uses: actions/cache/save@v4
@@ -92,7 +92,7 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Generate docs
-        run: PYTHONPYCACHEPREFIX=${{pycache-path}}  mamba run -n hydromt sphinx-build docs/source docs/_build
+        run: PYTHONPYCACHEPREFIX=${{matrix.pycache-path}}  mamba run -n hydromt sphinx-build docs/source docs/_build
 
       - name: Upload cache
         uses: actions/cache/save@v4
