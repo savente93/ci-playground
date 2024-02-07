@@ -2,8 +2,6 @@
 name: Refrech CI cache
 
 on:
-  schedule:
-    - cron: 0 0 * * Sun # run on main every sunday at 00:00 
   workflow_dispatch:
 
 jobs:
@@ -17,12 +15,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        # os: [windows-latest]
+        os: [ubuntu-latest, windows-latest]
         # python-version: ['3.10','3.11']
         python-version: ['3.10']
     name: py ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
-    # note absence of cucurrency, this one should only be run one at a time
     steps:
       - uses: actions/checkout@v3
       - name: Setup Mambaforge
@@ -32,6 +30,9 @@ jobs:
             miniforge-variant: Mambaforge
             miniforge-version: latest
             use-mamba: true
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Setup env
         run: |
