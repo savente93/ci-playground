@@ -69,4 +69,4 @@ jobs:
 
       - name: Test
         run: |
-          PYTHONPYCACHEPREFIX=~/pycache ${{ matrix.miniconda-path }}/condabin/mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+          PYTHONPYCACHEPREFIX=${{pycache-path}}  ${{ matrix.miniconda-path }}/condabin/mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
