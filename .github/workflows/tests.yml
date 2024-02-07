@@ -41,6 +41,9 @@ jobs:
           restore-keys: |
             test-py${{ matrix.python-version }}
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Fail on no cache restore
         if: steps.cache.outputs.cache-matched-key == '' 
         run: |
