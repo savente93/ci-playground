@@ -50,8 +50,6 @@ jobs:
             test-${{ matrix.os }}-py${{ matrix.python-version }}
             test-${{ matrix.os }}
 
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
 
       - name: Fail on no cache restore
         if: steps.cache.outputs.cache-matched-key == '' 

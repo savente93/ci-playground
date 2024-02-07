@@ -51,6 +51,9 @@ jobs:
       - name: Test
         run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path}} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Upload cache
         uses: actions/cache/save@v4
         with:
