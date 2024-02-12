@@ -51,7 +51,7 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Test
-        run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path}} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path }} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
@@ -89,13 +89,13 @@ jobs:
       - name: Setup env
         run: |
           pip install tomli
-          python make_env.py test,io,extra,doc -p $DOC_PYTHON_VERSION -n hydromt
+          python make_env.py test,io,extra,doc -p ${{ env.DOC_PYTHON_VERSION }} -n hydromt
           mamba env create -f environment.yml
           mamba run -n hydromt pip install -e .
 
       # run tests first so that we can also cache all of the artefacts
       - name: Generate docs
-        run: PYTHONPYCACHEPREFIX=${{matrix.pycache-path}}  mamba run -n hydromt sphinx-build docs/source docs/_build
+        run: PYTHONPYCACHEPREFIX=~/pycache  mamba run -n hydromt sphinx-build docs/source docs/_build
 
       - name: Upload cache
         uses: actions/cache/save@v4
