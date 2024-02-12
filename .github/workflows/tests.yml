@@ -18,9 +18,11 @@ jobs:
         include:
           - os: windows-latest
             mamba-path: C:\Users\runneradmin\miniconda3\condabin\mamba
+            miniconda-path: C:\Users\runneradmin\miniconda3
             pycache-path: C:\Users\runneradmin\pycache
           - os: ubuntu-latest
-            mamba-path: ~/miniconda3/condabin/mamba
+            mamba-path: ~/miniconda3
+            miniconda-path: ~/miniconda3/condabin/mamba
             pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
