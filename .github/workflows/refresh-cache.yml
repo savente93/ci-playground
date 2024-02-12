@@ -25,10 +25,10 @@ jobs:
         include:
           - os: windows-latest
             miniconda-path: /c/users/runneradmin/miniconda3
-            pycache-path: /c/users/runneradmin/pycache
+            # pycache-path: /c/users/runneradmin/pycache
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
-            pycache-path: ~/pycache
+            # pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
@@ -51,7 +51,8 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Test
-        run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path }} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        # run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path }} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
+        run: mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
@@ -61,7 +62,6 @@ jobs:
         with:
           path: | 
             ${{ matrix.miniconda-path }}
-            ${{ matrix.pycache-path }}
           key: test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
         id: test-cache
 
@@ -95,14 +95,13 @@ jobs:
 
       # run tests first so that we can also cache all of the artefacts
       - name: Generate docs
-        run: PYTHONPYCACHEPREFIX=~/pycache  mamba run -n hydromt sphinx-build docs/source docs/_build
+        run: mamba run -n hydromt sphinx-build docs/source docs/_build
 
       - name: Upload cache
         uses: actions/cache/save@v4
         with:
           path: | 
             ~/miniconda3
-            ~/pycache
             ~/docs/_build
           key: docs-${{ hashFiles('environment.yml')  }}
         id: docs-cache
