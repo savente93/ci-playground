@@ -17,11 +17,9 @@ jobs:
         python-version: ['3.10']
         include:
           - os: windows-latest
-            miniconda-path: /c/users/runneradmin/miniconda3
-            pycache-path: /c/users/runneradmin/pycache
+            miniconda-path: C:\Users\runneradmin\miniconda3
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
-            pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     concurrency:
@@ -39,7 +37,7 @@ jobs:
         id: cache
         uses: actions/cache/restore@v4
         with:
-          path: | 
+          path: |
             ${{ matrix.miniconda-path }}
             ${{ matrix.pycache-path }}
           # the below two settings mean we'll always restore the cache
@@ -54,7 +52,7 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3
 
       - name: Fail on no cache restore
-        if: steps.cache.outputs.cache-matched-key == '' 
+        if: steps.cache.outputs.cache-matched-key == ''
         run: |
           echo "Failed to restore any cache. exiting..."
           exit 1

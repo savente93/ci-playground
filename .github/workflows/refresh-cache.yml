@@ -4,7 +4,7 @@ name: Refrech CI cache
 on:
   workflow_dispatch:
 
-# only one of this flow should run at the same time. 
+# only one of this flow should run at the same time.
 concurrency:
   group: refresh-ci-cache
   cancel-in-progress: true
@@ -24,7 +24,7 @@ jobs:
         python-version: ['3.10']
         include:
           - os: windows-latest
-            miniconda-path: /c/users/runneradmin/miniconda3
+            miniconda-path: C:\Users\runneradmin\miniconda3
             # pycache-path: /c/users/runneradmin/pycache
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
@@ -54,54 +54,54 @@ jobs:
         # run: PYTHONPYCACHEPREFIX=${{ matrix.pycache-path }} mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
         run: mamba run -n hydromt python -m pytest --verbose --cov=hydromt --cov-report xml
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Upload cache
         uses: actions/cache/save@v4
         with:
-          path: | 
+          path: |
             ${{ matrix.miniconda-path }}
           key: test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
         id: test-cache
 
-  rebuild-docs-cache:
-    needs: clear-cache
-    defaults:
-      run:
-        shell: bash -l {0}
-    runs-on: ubuntu-latest
-    env:
-      DOC_PYTHON_VERSION: '3.11'
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v4
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-            python-version: ${{ env.DOC_PYTHON_VERSION }}
-            miniforge-variant: Mambaforge
-            miniforge-version: latest
-            channels: conda-forge
-            use-mamba: true
+  # rebuild-docs-cache:
+  #   needs: clear-cache
+  #   defaults:
+  #     run:
+  #       shell: bash -l {0}
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     DOC_PYTHON_VERSION: '3.11'
+  #   steps:
+  #     - name: checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup env
-        run: |
-          pip install tomli
-          python make_env.py test,io,extra,doc -p ${{ env.DOC_PYTHON_VERSION }} -n hydromt
-          mamba env create -f environment.yml
-          mamba run -n hydromt pip install -e .
+  #     - name: Setup Mambaforge
+  #       uses: conda-incubator/setup-miniconda@v3
+  #       with:
+  #           python-version: ${{ env.DOC_PYTHON_VERSION }}
+  #           miniforge-variant: Mambaforge
+  #           miniforge-version: latest
+  #           channels: conda-forge
+  #           use-mamba: true
 
-      # run tests first so that we can also cache all of the artefacts
-      - name: Generate docs
-        run: mamba run -n hydromt sphinx-build docs/source docs/_build
+  #     - name: Setup env
+  #       run: |
+  #         pip install tomli
+  #         python make_env.py test,io,extra,doc -p ${{ env.DOC_PYTHON_VERSION }} -n hydromt
+  #         mamba env create -f environment.yml
+  #         mamba run -n hydromt pip install -e .
 
-      - name: Upload cache
-        uses: actions/cache/save@v4
-        with:
-          path: | 
-            ~/miniconda3
-            ~/docs/_build
-          key: docs-${{ hashFiles('environment.yml')  }}
-        id: docs-cache
+  #     # run tests first so that we can also cache all of the artefacts
+  #     - name: Generate docs
+  #       run: mamba run -n hydromt sphinx-build docs/source docs/_build
+
+  #     - name: Upload cache
+  #       uses: actions/cache/save@v4
+  #       with:
+  #         path: |
+  #           ~/miniconda3
+  #           ~/docs/_build
+  #         key: docs-${{ hashFiles('environment.yml')  }}
+  #       id: docs-cache
