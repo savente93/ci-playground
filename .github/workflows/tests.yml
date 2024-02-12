@@ -18,8 +18,10 @@ jobs:
         include:
           - os: windows-latest
             miniconda-path: C:\Users\runneradmin\miniconda3
+            pycache-path: C:\Users\runneradmin\pycache
           - os: ubuntu-latest
             miniconda-path: ~/miniconda3
+            pycache-path: ~/pycache
     name: py ${{ matrix.python-version }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     concurrency:
@@ -47,9 +49,6 @@ jobs:
             test-${{ matrix.os }}-py${{ matrix.python-version }}-${{ hashFiles('environment.yml')  }}
             test-${{ matrix.os }}-py${{ matrix.python-version }}
             test-${{ matrix.os }}
-
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
 
       - name: Fail on no cache restore
         if: steps.cache.outputs.cache-matched-key == ''
