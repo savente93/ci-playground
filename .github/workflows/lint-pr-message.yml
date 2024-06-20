@@ -1,0 +1,19 @@
+name: Linting PR description
+
+on:
+  pull_request: 
+    types: [opened, reopened, edited]
+
+jobs:
+  lint-description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install conventional_commits_linter
+        env:
+            PR_NUMBER: ${{ github.event.number }}
+            GH_TOKEN: ${{ github.token }}
+        run: |
+            cargo install conventional_commits_linter
+            gh pr view $PR_NUMBER --json title,body --jq ".title,.body" | conventional_commits_linter --from-stdin
