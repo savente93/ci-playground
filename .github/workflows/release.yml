@@ -83,11 +83,9 @@ jobs:
             exit 1;
           fi
 
-          gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -b "Hi there!  This is an automated PR made for your release. If everything has gone well, all tests should now be running. Please check that the PR is as you would like it to be, and feel free to push any changes to this branch before merging. Once you're happy with the state of the PR, someone just needs to approve it, and I'll take care of the rest! "
-          gh co "release/v$NEW_VERSION"
-
           # # create release branch
-          # git checkout -b "release/v$NEW_VERSION"
+          git pull 
+          git checkout -b "release/v$NEW_VERSION"
 
           # update version in python file
           sed -i "s/.*__version__.*/__version__ = \"$NEW_VERSION\"/" hydromt/__init__.py
@@ -125,5 +123,9 @@ jobs:
           git add .
           git commit -m "prepare for release v$NEW_VERSION"
           # git pull # make sure git doesn't reject our push becasue of unknown refs
-          git push #--set-upstream origin release/v$NEW_VERSION
+          git push --set-upstream origin release/v$NEW_VERSION
+
+          gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -b "Hi there!  This is an automated PR made for your release. If everything has gone well, all tests should now be running. Please check that the PR is as you would like it to be, and feel free to push any changes to this branch before merging. Once you're happy with the state of the PR, someone just needs to approve it, and I'll take care of the rest! "
+          gh co "release/v$NEW_VERSION"
+
 
