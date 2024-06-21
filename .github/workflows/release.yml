@@ -2,6 +2,27 @@ name: Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      latest_release:
+        type: boolean
+        default: false
+        description: "Label this release as `latest`?"
+      bump:
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: minor
+        description: "Is this a Major, Minor, or Patch release?"
+      target:
+        type: choice
+        description: "What branch should we merge to after the release?"
+        default: main
+        options:
+          - main
+          - v1
+          - release/v1-alpha
 
 jobs:
   build:
