@@ -115,6 +115,7 @@ jobs:
 
           git add .
           git commit -m "prepare for release v$NEW_VERSION"
+          git pull # make sure git doesn't reject our push becasue of unknown refs
           git push --set-upstream origin release/v$NEW_VERSION
 
           gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -T ".github/templates/release_pr.md"
