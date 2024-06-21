@@ -29,7 +29,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    name: py ${{ matrix.python-version }} (${{ matrix.os }})
+    name: Setup release PR
     runs-on: ubuntu-24.04 # latest LTS release
     concurrency:
       group: NEW_RELEASE
@@ -72,14 +72,14 @@ jobs:
           esac
 
           ## seting up git
-          # git config user.name "GitHub Actions Bot"
-          # git config user.email "<>"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
 
           # create release branch
-          # git checkout -b "release/v$NEW_VERSION"
+          git checkout -b "release/v$NEW_VERSION"
 
           # update version in python file
-          # sed -i "s/.*__version__.*/__version__ = \"$NEW_VERSION\"/" hydromt/__init__.py
+          sed -i "s/.*__version__.*/__version__ = \"$NEW_VERSION\"/" hydromt/__init__.py
 
           sed -i "s/.*__version__.*/__version__ = \"$NEW_VERSION\"/" docs/changelog.rst
           export NEW_CHANGELOG_HEADER="v$NEW_VERSION ($(date -I))"
