@@ -113,6 +113,6 @@ jobs:
 
           git add .
           git commit -m "prepare for release v$NEW_VERSION"
-          git push
+          git push --set-upstream origin release/v$NEW_VERSION
 
           gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -T ".github/templates/release_pr.md"
