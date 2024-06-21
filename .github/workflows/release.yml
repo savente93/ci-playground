@@ -39,6 +39,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: setup release PR
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
 
           set -e
