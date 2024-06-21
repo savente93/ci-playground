@@ -77,8 +77,11 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
-          # create release branch
-          git checkout -b "release/v$NEW_VERSION"
+          gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -T ".github/templates/release_pr.md"
+          gh co "release/v$NEW_VERSION"
+
+          # # create release branch
+          # git checkout -b "release/v$NEW_VERSION"
 
           # update version in python file
           sed -i "s/.*__version__.*/__version__ = \"$NEW_VERSION\"/" hydromt/__init__.py
@@ -115,7 +118,6 @@ jobs:
 
           git add .
           git commit -m "prepare for release v$NEW_VERSION"
-          git pull # make sure git doesn't reject our push becasue of unknown refs
-          git push --set-upstream origin release/v$NEW_VERSION
+          # git pull # make sure git doesn't reject our push becasue of unknown refs
+          git push #--set-upstream origin release/v$NEW_VERSION
 
-          gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -T ".github/templates/release_pr.md"
