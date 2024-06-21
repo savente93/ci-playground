@@ -28,3 +28,10 @@ jobs:
           set -e
           PR_ID=$(gh pr list --state "open" --author "app/github-actions" --search "release"  --json "number" --jq '. | first | .number')
           gh pr merge $PR_ID
+
+          # TODO: 
+          # - create tag 
+          # - publish to pypi, docker, conda
+          # - create gh release
+          # - publish docs
+          # - make new commit with new `Unreleased` header in changelog, and set version back to dev 
