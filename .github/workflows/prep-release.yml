@@ -119,7 +119,17 @@ jobs:
           git commit -m "prepare for release v$NEW_VERSION"
           git push --set-upstream origin release/v$NEW_VERSION
 
-          gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -b "Hi there! \nThis is an automated PR made for your release. If everything has gone well, all tests should now be running. Please check that the PR is as you would like it to be, and feel free to push any changes to this branch before merging. Once you're happy with the state of the PR, someone just needs to approve it, and I'll take care of the rest! "
+          # gh cli should return the url of the pr it just created. we'll store that so we can access it later
+          export PR_URL=$(gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -b "Hi there!  This is an automated PR made for your release. If everything has gone well, all tests should now be running. Please check that the PR is as you would like it to be, and feel free to push any changes to this branch before merging. Once you're happy with the state of the PR, someone just needs to approve it, and I'll take care of the rest! ")
           gh co "release/v$NEW_VERSION"
+
+          export LAST_RELEASE=$(git tag | grep -v alpha | head -n 1)
+          export PYPROJ_DIFF=$(git diff "release/v$NEW_VERSION" $LAST_RELEASE -- pyproject.toml)
+
+          if [[ -z $PYPROJ_DIFF ]]; then
+            gh pr comment $PR_URL --body "I've detected the latest release was $LAST_RELEASE. No dependency or project config changes have been made since then."
+          else
+            gh pr comment $PR_URL --body "I've detected the latest release was $LAST_RELEASE. Here are the changes made to the `pyproject.toml` since then: $PYPROJ_DIFF (you will need these for the conda release)"
+          fi
 
 
