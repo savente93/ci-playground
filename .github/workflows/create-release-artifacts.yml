@@ -63,6 +63,8 @@ jobs:
       - name: Add comment to PR
         run: |
           gh pr comment ${{ steps.extract_branch.outputs.branch }} --body "You can download the latest release docs here for inspection: ${{ steps.upload-release-docs.outputs.artifact-url }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
           
   # docker:
   #   runs-on: ubuntu-latest
