@@ -124,7 +124,9 @@ jobs:
           gh co "release/v$NEW_VERSION"
 
           export LAST_RELEASE=$(git tag  | head -n 1)
+          echo $LAST_RELEASE
           export PYPROJ_DIFF=$(git diff "release/v$NEW_VERSION" $LAST_RELEASE -- pyproject.toml)
+          echo $PYPROJ_DIFF
 
           if [[ -z $PYPROJ_DIFF ]]; then
             gh pr comment $PR_URL --body "I've detected the latest tag was $LAST_RELEASE. No dependency or project config changes have been made since then."
