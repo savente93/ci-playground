@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 
 [project]
-name = "playground"
+name = "hydromt"
 version = '0.0.1'
 authors = [{ name = "Sam Vente", email = "savente93@gmail.com" }]
 description = "used to test ci applications. do not use."
