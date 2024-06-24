@@ -127,9 +127,9 @@ jobs:
           export PYPROJ_DIFF=$(git diff "release/v$NEW_VERSION" $LAST_RELEASE -- pyproject.toml)
 
           if [[ -z $PYPROJ_DIFF ]]; then
-            gh pr comment $PR_URL --body "I've detected the latest release was $LAST_RELEASE. No dependency or project config changes have been made since then."
+            gh pr comment $PR_URL --body "I've detected the latest tag was $LAST_RELEASE. No dependency or project config changes have been made since then."
           else
-            gh pr comment $PR_URL --body "I've detected the latest release was $LAST_RELEASE. Here are the changes made to the `pyproject.toml` since then: $PYPROJ_DIFF (you will need these for the conda release)"
+            gh pr comment $PR_URL --body "I've detected the latest tag was $LAST_RELEASE. Here are the changes made to the `pyproject.toml` since then: $PYPROJ_DIFF (you will need these for the conda release)"
           fi
 
 

@@ -2,11 +2,12 @@
 requires = ["flit_core >=3.4.0,<4"]
 build-backend = "flit_core.buildapi"
 
+
 [project]
 name = "playground"
 version = '0.0.1'
 authors = [{ name = "Sam Vente", email = "savente93@gmail.com" }]
-description = "used to test ci applications. do not use."
+description = "used to test ci applications. do not use. aaaaaaaaaaaaaaaaaaa"
 # dependencies coppied from HydroMT for realistic test case. not actually used for anything
 dependencies = [
   # "affine",            # Spatial rasterers affine transformations (bbox pixel coalision)
