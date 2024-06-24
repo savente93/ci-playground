@@ -137,9 +137,11 @@ jobs:
             echo $'\n\n```\n' >> comment.txt
             echo "(you might have to update the receipt to update to reflect these changes when releasing to conda)"
             gh pr comment "$PR_URL" --body-file comment.txt
-
           fi
 
+
+          # bit sad I coudln't get the triggers to work, but oh well.
+          gh workflow run create-release-artifacts.yml
 
 
           
