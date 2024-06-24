@@ -141,7 +141,7 @@ jobs:
 
 
           # bit sad I coudln't get the triggers to work, but oh well.
-          gh workflow run create-release-artifacts.yml
+          gh workflow run create-release-artifacts.yml --ref release/v$NEW_VERSION
 
 
           
