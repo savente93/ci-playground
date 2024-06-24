@@ -22,8 +22,8 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    strategy:
-      fail-fast: false
+    # strategy:
+    #   fail-fast: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # concurrency:
