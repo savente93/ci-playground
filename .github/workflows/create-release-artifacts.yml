@@ -4,12 +4,11 @@ on:
   workflow_dispatch:
   # running this when PR opens we'll do in prep-release manually, see that file for more details
   push:
-    branches: ["release/*"]
+    branches: ["release*"]
 
 jobs:
   pypi:
     runs-on: ubuntu-latest
-    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'release/'))
     outputs:
       url: ${{ steps.upload-pypi-release-artifacts.outputs.artifact-url }}
     steps:
@@ -40,7 +39,6 @@ jobs:
           path: dist
   docs:
     runs-on: ubuntu-latest
-    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'release/'))
     outputs:
       url: ${{ steps.upload-docs-release-artifacts.outputs.artifact-url }}
     steps:
@@ -65,7 +63,6 @@ jobs:
           
   docker:
     runs-on: ubuntu-latest
-    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'release/'))
     outputs:
       url: ${{ steps.upload-docker-release-artifacts.outputs.artifact-url }}
     steps:
