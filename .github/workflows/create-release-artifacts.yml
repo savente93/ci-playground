@@ -19,6 +19,7 @@ jobs:
       - name: Debug Ref 
         run: |
           echo "Ref: ${{ github.ref }}"
+          echo "Ref name: ${{ github.ref_name }}"
 
       - uses: actions/setup-python@v5
         name: Install Python
