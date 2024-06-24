@@ -35,38 +35,38 @@ jobs:
         with:
           name: releases
           path: dist
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: prefix-dev/setup-pixi@v0.6.0
-        with:
-          pixi-version: "v0.21.1"
-          environments: full-py311
+  # docs:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: prefix-dev/setup-pixi@v0.6.0
+  #       with:
+  #         pixi-version: "v0.21.1"
+  #         environments: full-py311
 
-      - name: Generate docs
-        run: |
-          pixi run --locked -e full-py311 html
+  #     - name: Generate docs
+  #       run: |
+  #         pixi run --locked -e full-py311 html
 
-      - uses: actions/upload-artifact@v4
-        id: upload-release-docs
-        with:
-          name: release-docs
-          path: docs/_build
+  #     - uses: actions/upload-artifact@v4
+  #       id: upload-release-docs
+  #       with:
+  #         name: release-docs
+  #         path: docs/_build
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
+  #     - name: Extract branch name
+  #       shell: bash
+  #       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+  #       id: extract_branch
 
 
-      - name: Add comment to PR
-        run: |
-          gh pr comment ${{ steps.extract_branch.outputs.branch }} --body "You can download the latest release docs here for inspection: ${{ steps.upload-release-docs.outputs.artifact-url }}"
-        env:
-          GH_TOKEN: ${{ github.token }}
+  #     - name: Add comment to PR
+  #       run: |
+  #         gh pr comment ${{ steps.extract_branch.outputs.branch }} --body "You can download the latest release docs here for inspection: ${{ steps.upload-release-docs.outputs.artifact-url }}"
+  #       env:
+  #         GH_TOKEN: ${{ github.token }}
           
   docker:
     runs-on: ubuntu-latest
