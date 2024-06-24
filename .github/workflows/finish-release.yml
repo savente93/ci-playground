@@ -1,5 +1,5 @@
 
-name: Create a new release
+name: Finalise a new release
 
 on:
   pull_request:
