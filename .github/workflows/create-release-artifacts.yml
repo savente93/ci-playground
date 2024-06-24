@@ -5,11 +5,11 @@ on:
   push:
     branches: ["release/*"]
   pull_request:
-    branches: ["release/*"]
 
 jobs:
   pypi:
     runs-on: ubuntu-latest
+    if: startsWith( github.ref_name , "release")
     outputs:
       url: ${{ steps.upload-pypi-release-artifacts.outputs.artifact-url }}
     steps:
@@ -40,6 +40,7 @@ jobs:
           path: dist
   docs:
     runs-on: ubuntu-latest
+    if: startsWith( github.ref_name , "release")
     outputs:
       url: ${{ steps.upload-docs-release-artifacts.outputs.artifact-url }}
     steps:
@@ -64,6 +65,7 @@ jobs:
           
   docker:
     runs-on: ubuntu-latest
+    if: startsWith( github.ref_name , "release")
     outputs:
       url: ${{ steps.upload-docker-release-artifacts.outputs.artifact-url }}
     steps:
