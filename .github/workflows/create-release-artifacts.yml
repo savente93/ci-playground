@@ -84,7 +84,9 @@ jobs:
           tags: hydromt
 
       - name: Run Tests
-        run: docker run --env NUMBA_DISABLE_JIT=1 --rm hydromt 
+        run: |
+          docker load --input /tmp/hydromt-docker-image.tar
+          docker run --env NUMBA_DISABLE_JIT=1 --rm hydromt 
 
       - name: Test Binder integration with repo2docker
         run: |
