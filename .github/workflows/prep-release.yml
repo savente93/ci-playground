@@ -123,11 +123,10 @@ jobs:
           export PR_URL=$(gh pr create -B "main" -H "release/v$NEW_VERSION" -t "Release v$NEW_VERSION" -b "Hi there!  This is an automated PR made for your release. If everything has gone well, all tests should now be running. Please check that the PR is as you would like it to be, and feel free to push any changes to this branch before merging. Once you're happy with the state of the PR, someone just needs to approve it, and I'll take care of the rest! ")
           gh co "release/v$NEW_VERSION"
 
+          # not fetched by default
+          git fetch --tags
           export LAST_RELEASE=$(git tag  | head -n 1)
-          echo $LAST_RELEASE
-          echo $NEW_VERSION
           export PYPROJ_DIFF=$(git diff $LAST_RELEASE -- pyproject.toml)
-          echo $PYPROJ_DIFF
 
           if [[ -z $PYPROJ_DIFF ]]; then
             gh pr comment $PR_URL --body "I've detected the latest tag was $LAST_RELEASE. No dependency or project config changes have been made since then."
@@ -136,5 +135,4 @@ jobs:
           fi
 
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+          
