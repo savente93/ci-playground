@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
   # running this when PR opens we'll do in prep-release manually, see that file for more details
   push:
-    branches: ["release*"]
+    branches: 
+      - release*
 
 jobs:
   pypi:
