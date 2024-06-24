@@ -1,10 +1,10 @@
-.. playground documentation master file, created by
-   sphinx-quickstart on Mon Oct  2 17:32:19 2023.
+.. asdf documentation master file, created by
+   sphinx-quickstart on Mon Jun 24 12:28:07 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to playground's documentation!
-======================================
+Welcome to asdf's documentation!
+================================
 
 .. toctree::
    :maxdepth: 2
