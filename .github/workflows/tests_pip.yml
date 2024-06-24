@@ -3,19 +3,19 @@ name: Tests with pip install
 on:
   push:
     branches: [main]
-    paths:
-      - tests/*
-      - hydromt/*
-      - data/*
-      - pyproject.toml
-  pull_request:
-    branches:
-      - main
-    paths:
-      - tests/*
-      - hydromt/*
-      - data/*
-      - pyproject.toml
+  #   paths:
+  #     - tests/*
+  #     - hydromt/*
+  #     - data/*
+  #     - pyproject.toml
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - tests/*
+  #     - hydromt/*
+  #     - data/*
+  #     - pyproject.toml
 
 
 jobs:

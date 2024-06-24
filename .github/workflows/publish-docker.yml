@@ -2,21 +2,21 @@
 name: Build and publish HydroMT to DockerHub
 
 on:
-  release:
-    types:
-      - published
+  # release:
+  #   types:
+  #     - published
 
   workflow_dispatch:
-    inputs:
-      publish:
-        description: 'Actually push images'
-        required: true
-        type: boolean
-        default: false
-      version:
-        description: 'The version to publish'
-        required: true
-        type: text
+  #   inputs:
+  #     publish:
+  #       description: 'Actually push images'
+  #       required: true
+  #       type: boolean
+  #       default: false
+  #     version:
+  #       description: 'The version to publish'
+  #       required: true
+  #       type: text
 
 
 jobs:
