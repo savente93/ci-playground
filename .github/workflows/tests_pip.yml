@@ -1,8 +1,7 @@
 name: Tests with pip install
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
   #   paths:
   #     - tests/*
   #     - hydromt/*
