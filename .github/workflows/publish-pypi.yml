@@ -2,12 +2,12 @@
 name: Build and Upload HydroMT to PyPI
 
 on:
-  release:
-    types:
-      - published
-  push:
-    tags:
-      - v*
+  # release:
+  #   types:
+  #     - published
+  # push:
+  #   tags:
+  #     - v*
   workflow_dispatch:
 
 

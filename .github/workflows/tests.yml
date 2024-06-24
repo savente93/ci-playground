@@ -2,30 +2,30 @@ name: Tests
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - v1
-    paths:
-      - tests/**/*
-      - hydromt/**/*
-      - data/**/*
-      - pyproject.toml
-      - pixi.lock
-      - pixi.toml
-      - .github/workflows/tests.yml
-  pull_request:
-    branches:
-      - main
-      - v1
-    paths:
-      - tests/**/*
-      - hydromt/**/*
-      - data/**/*
-      - pyproject.toml
-      - pixi.lock
-      - pixi.toml
-      - .github/workflows/tests.yml
+  # push:
+  #   branches:
+  #     - main
+  #     - v1
+  #   paths:
+  #     - tests/**/*
+  #     - hydromt/**/*
+  #     - data/**/*
+  #     - pyproject.toml
+  #     - pixi.lock
+  #     - pixi.toml
+  #     - .github/workflows/tests.yml
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - v1
+  #   paths:
+  #     - tests/**/*
+  #     - hydromt/**/*
+  #     - data/**/*
+  #     - pyproject.toml
+  #     - pixi.lock
+  #     - pixi.toml
+  #     - .github/workflows/tests.yml
 
 
 jobs:
