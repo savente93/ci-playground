@@ -1,0 +1,113 @@
+
+name: Create release artifacts
+on:
+  workflow_dispatch:
+  push:
+    branches: ["release/*"]
+  pull_request:
+    branches: ["release/*"]
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: '3.10'
+
+      - name: generate env
+        run: |
+          pip install tomli flit twine
+
+      - name: Build artifacts
+        run: |
+          flit build
+          python -m twine check dist/*"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: releases
+          path: dist
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: '3.10'
+
+      - name: generate env
+        run: |
+          pip install tomli flit twine
+
+      - name: Build artifacts
+        run: |
+          flit build
+          python -m twine check dist/*"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: releases
+          path: dist
+  pixi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: '3.10'
+
+      - name: generate env
+        run: |
+          pip install tomli flit twine
+
+      - name: Build artifacts
+        run: |
+          flit build
+          python -m twine check dist/*"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: releases
+          path: dist
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: '3.10'
+
+      - name: generate env
+        run: |
+          pip install tomli flit twine
+
+      - name: Build artifacts
+        run: |
+          flit build
+          python -m twine check dist/*"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: releases
+          path: dist
+
+    
+  
