@@ -49,9 +49,21 @@ jobs:
           pixi run --locked -e full-py311 html
 
       - uses: actions/upload-artifact@v3
+        id: upload-release-docs
         with:
           name: release-docs
           path: docs/_build
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+
+      - name: Add comment to PR
+        run: |
+          gh pr comment ${{ steps.extract_branch.outputs.branch }} --body "You can download the latest release docs here for inspection: ${{ steps.upload-release-docs.outputs.artifact-url }}"
+          
   # docker:
   #   runs-on: ubuntu-latest
   #   steps:
