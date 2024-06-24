@@ -135,6 +135,7 @@ jobs:
             echo $'\n\n```diff\n' >> comment.txt
             echo "$PYPROJ_DIFF" >> comment.txt
             echo $'\n\n```\n' >> comment.txt
+            echo "(you might have to update the receipt to update to reflect these changes when releasing to conda)"
             gh pr comment "$PR_URL" --body-file comment.txt
 
           fi
