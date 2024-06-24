@@ -139,6 +139,8 @@ jobs:
             gh pr comment "$PR_URL" --body-file comment.txt
           fi
 
+          git commit --allow-empty -m "Trigger artefact creation"
+          git push
 
           # bit sad I coudln't get the triggers to work, but oh well.
           # gh workflow run create-release-artifacts.yml --ref release/v$NEW_VERSION
