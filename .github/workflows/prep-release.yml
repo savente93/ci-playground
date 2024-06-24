@@ -142,7 +142,7 @@ jobs:
 
           echo "Github does not allow workflows to be triggered from other workflows, so I can't start those for you" > comment.txt
           echo "However, you can trigger them by executing the following commands:" >> comment.txt
-            echo "\`git fetch && git checkout release/v$NEW_VERSION && git commit --allow-empty -m \"Trigger artifact creation\"\`. " >> comment.txt
+            echo "\`git fetch && git checkout release/v$NEW_VERSION && git commit --allow-empty -m \"Trigger artifact creation\" && git push\`. " >> comment.txt
           gh pr comment "$PR_URL" --body-file comment.txt
 
 
