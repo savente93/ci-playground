@@ -125,7 +125,8 @@ jobs:
 
           export LAST_RELEASE=$(git tag  | head -n 1)
           echo $LAST_RELEASE
-          export PYPROJ_DIFF=$(git diff "release/v$NEW_VERSION" $LAST_RELEASE -- pyproject.toml)
+          echo $NEW_VERSION
+          export PYPROJ_DIFF=$(git diff $LAST_RELEASE -- pyproject.toml)
           echo $PYPROJ_DIFF
 
           if [[ -z $PYPROJ_DIFF ]]; then
