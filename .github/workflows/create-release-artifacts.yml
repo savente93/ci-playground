@@ -9,7 +9,7 @@ on:
 jobs:
   pypi:
     runs-on: ubuntu-latest
-    if:  startsWith(github.head_ref, 'releases/')
+    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'releases/'))
     outputs:
       url: ${{ steps.upload-pypi-release-artifacts.outputs.artifact-url }}
     steps:
@@ -40,7 +40,7 @@ jobs:
           path: dist
   docs:
     runs-on: ubuntu-latest
-    if:  startsWith(github.head_ref, 'releases/')
+    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'releases/'))
     outputs:
       url: ${{ steps.upload-docs-release-artifacts.outputs.artifact-url }}
     steps:
@@ -65,7 +65,7 @@ jobs:
           
   docker:
     runs-on: ubuntu-latest
-    if:  startsWith(github.head_ref, 'releases/')
+    if:  github.event_name == "push" || (github.event_name == "pull_request" && startsWith(github.head_ref, 'releases/'))
     outputs:
       url: ${{ steps.upload-docker-release-artifacts.outputs.artifact-url }}
     steps:
