@@ -8,6 +8,7 @@ name = "hydromt"
 version = '0.0.1'
 authors = [{ name = "Sam Vente", email = "savente93@gmail.com" }]
 description = "used to test ci applications. do not use."
+readme = "readme.rst"
 # dependencies coppied from HydroMT for realistic test case. not actually used for anything
 dependencies = [
   "pandas", # Dataframes
