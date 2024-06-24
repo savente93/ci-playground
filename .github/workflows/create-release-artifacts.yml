@@ -5,7 +5,7 @@ on:
   # running this when PR opens we'll do in prep-release manually, see that file for more details
   push:
     branches: 
-      - release*
+      - release
 
 jobs:
   pypi:
