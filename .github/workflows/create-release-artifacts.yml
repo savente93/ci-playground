@@ -9,13 +9,16 @@ on:
 jobs:
   pypi:
     runs-on: ubuntu-latest
-    if: ${{ startsWith( github.ref_name , 'release') }}
     outputs:
       url: ${{ steps.upload-pypi-release-artifacts.outputs.artifact-url }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Debug Ref 
+        run: |
+          echo "Ref: ${{ github.ref }}"
 
       - uses: actions/setup-python@v5
         name: Install Python
