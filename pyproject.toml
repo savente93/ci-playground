@@ -7,23 +7,9 @@ build-backend = "flit_core.buildapi"
 name = "playground"
 version = '0.0.1'
 authors = [{ name = "Sam Vente", email = "savente93@gmail.com" }]
-description = "used to test ci applications. do not use. aaaaaaaaaaaaaaaaaaa"
+description = "used to test ci applications. do not use."
 # dependencies coppied from HydroMT for realistic test case. not actually used for anything
 dependencies = [
-  # "affine",            # Spatial rasterers affine transformations (bbox pixel coalision)
-  # "bottleneck",        # Spearmen rank computation
-  # "click",             # CLI configuration
-  # "dask",              # lazy computing
-  # "entrypoints",       # Provide access for Plugins
-  # "fsspec",            # general file systems utilities
-  # "geopandas>=0.10",   # pandas but geo, wraps fiona and shapely
-  # "gdal>=3.1",         # enable geospacial data manipulation, both  raster and victor
-  # "mercantile",        # tile handling
-  # "numba",             # speed up computations (used in e.g. stats)
-  # "numpy>=1.20",       # pin necessary to ensure compatability with C headers
-  # "netcdf4",           # netcfd IO
-  # "packaging",         # compare versions of hydromt
-  # "rioxarray",         # wraps rasterio and xarray. Almost superceded by hydromt/raster.py
   "pandas", # Dataframes
   # "pyflwdir>=0.5.4",   # Hight models and derivatives
   # "pyproj",            # projections for Coordinate reference systems
@@ -52,6 +38,7 @@ extra = [
   # "xugrid", # xarray wrapper for mesh processing
   # "pyet",   # calc evapotraspiration, quite well used, used in all wflow models but domain specific
   "polars",
+  "scipy",
 ]
 dev = [
   "black",       # linting
