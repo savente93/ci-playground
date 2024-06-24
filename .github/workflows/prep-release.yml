@@ -131,16 +131,12 @@ jobs:
           if [[ -z $PYPROJ_DIFF ]]; then
             gh pr comment "$PR_URL" --body "I've detected the latest tag was $LAST_RELEASE. No dependency or project config changes have been made since then."
           else
-          gh pr comment "$PR_URL" --body  "$(cat <<EOF
-            I've detected the latest tag was $LAST_RELEASE. Here are the changes made to the \`pyproject.toml\` since then:
+            echo "I've detected the latest tag was $LAST_RELEASE. Here are the changes made to the \`pyproject.toml\` since then:" > comment.txt
+            echo $'\n\n```diff\n' >> comment.txt
+            echo "$PYPROJ_DIFF" >> comment.txt
+            echo $'\n\n```\n' >> comment.txt
+            gh pr comment "$PR_URL" --body-file comment.txt
 
-            \`\`\`diff
-            $PYPROJ_DIFF
-            \`\`\`
-
-            (You will need these for the conda release)
-            EOF
-            )"
           fi
 
 
