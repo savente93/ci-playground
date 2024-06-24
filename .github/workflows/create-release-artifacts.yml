@@ -114,7 +114,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           pypi_url: ${{needs.pypi.outputs.url}}
-          docker_url: ${{needs.docer.outputs.url}}
+          docker_url: ${{needs.docker.outputs.url}}
           docs_url: ${{needs.docs.outputs.url}}
         run: |
           echo "The new release artifacts have been generated. You can download and inspect them by using the links below: " > comment.txt
