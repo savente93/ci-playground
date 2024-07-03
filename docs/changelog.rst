@@ -7,21 +7,6 @@ The format is based on `Keep a Changelog`_, and this project adheres to
 `Semantic Versioning`_.
 
 
-Unreleased
-==========
-
-New
----
-
-Changed
--------
-
-Fixed
------
-
-Deprecated
-----------
-
 v0.11.0 (2024-06-24)
 ====================
 
