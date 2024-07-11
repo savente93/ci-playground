@@ -49,7 +49,7 @@ jobs:
           export CURRENT_MINOR=$(echo $CURRENT_VERSION | cut -d'.' -f 2)
           export CURRENT_PATHCH=$(echo $CURRENT_VERSION | cut -d'.' -f 3)
 
-          BUMP="minor"
+          BUMP=$BUMP_KIND
 
           ## calculate new release number
           case $BUMP in
