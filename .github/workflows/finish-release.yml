@@ -120,3 +120,6 @@ jobs:
             echo "could not find release PR"
             exit 1
           fi
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
