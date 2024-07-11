@@ -12,6 +12,7 @@ v1.0.0 (2024-07-11)
 
 New
 ---
+- I promise I actually did something...
 
 Changed
 -------
