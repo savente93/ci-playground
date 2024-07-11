@@ -125,7 +125,7 @@ jobs:
 
       - name: Extract branch name
         shell: bash
-        run: echo $(grep "version" hydromt/__init__.py | cut -d= -f 2 | tr -d "\" ") >> $GITHUB_OUTPUT
+        run: echo "branch=$(grep "version" hydromt/__init__.py | cut -d= -f 2 | tr -d "\" ")" >> $GITHUB_OUTPUT
         id: extract_branch
 
 
