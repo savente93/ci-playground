@@ -98,7 +98,7 @@ jobs:
             git pull
             git checkout main
             export RELEASE_VERSION=$(grep "version" hydromt/__init__.py | cut -d= -f 2 | tr -d "\" ")
-            if [ -n "$RELEASE_VERSION" ]; then
+            if [ -z "$RELEASE_VERSION" ]; then
               echo "could not determine release version"
               echo "detection result: $RELEASE_VERSION"
               exit 1 # somthing went very wrong
