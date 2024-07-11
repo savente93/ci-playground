@@ -121,19 +121,15 @@ jobs:
     runs-on: ubuntu-24.04   
     env:
       GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+      RELEASE_VERSION: ${{ vars.ACTIVE_RELEASE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
-
-
       - name: Add comment to PR
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+          RELEASE_VERSION: ${{ vars.ACTIVE_RELEASE }}
           pypi_url: ${{needs.pypi.outputs.url}}
           docker_url: ${{needs.docker.outputs.url}}
           docs_url: ${{needs.docs.outputs.url}}
@@ -143,4 +139,4 @@ jobs:
           echo "    - docker: $docker_url" >> comment.txt
           echo "    - docs: $docs_url" >> comment.txt
 
-          gh pr comment ${{ steps.extract_branch.outputs.branch }} --body-file comment.txt 
+          gh pr comment "release/v$RELEASE_VERSION" --body-file comment.txt 
