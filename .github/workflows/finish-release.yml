@@ -87,6 +87,7 @@ jobs:
     runs-on: ubuntu-latest        
     env:
       GH_TOKEN: ${{ github.token }}
+      RELEASE_VERSION: ${{ vars.ACTIVE_RELEASE }}
     steps:
       - name: Merge release PR
         run: | 
@@ -101,10 +102,6 @@ jobs:
             gh pr merge $PR_ID
             git pull
             git checkout main
-            export RELEASE_VERSION=$(grep "version" hydromt/__init__.py | cut -d= -f 2 | tr -d "\" ")
-            if [ ! -z $RELEASE_VERSION ]; then
-              exit 1 # somthing went very wrong
-            fi
             git tag v$NEW_VERSION
             # post release stuff so we don't forget
             sed -i "s/v$RELEASE_VERSION/Unreleased\n==========\n\nNew\n---\n\nChanged\n-------\n\nFixed\n-----\n\nDeprecated\n----------\n\nv$RELEASE_VERSION/" docs/changelog.rst
@@ -112,4 +109,10 @@ jobs:
 
             git add hydromt/__init__.py docs/changelog.rst            
             git commit -m "Post release"
-            git push main origin
+            git push "release/v$RELEASE_VERSION" origin
+            gh veriable set ACTIVE_RELEASE --body "NONE"
+          else
+            echo "could not find release pr to merge"
+            exit 1
+          fi
+

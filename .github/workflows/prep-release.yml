@@ -25,11 +25,11 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: check there are no pre-existing release PRs
-        run: |
-          export EXISTING_RELEASE_PR_NUMBER=$(gh pr list --search "release" --json "number") 
-          if [ $(echo $EXISTING_RELEASE_PR_NUMBER | jq '.|length') -gt 0]; then
-            gh pr comment $EXISTING_RELEASE_PR_NUMBER --body "$username It looks like you tried to start a new release but this one is already started. Please either finish or close this one before continuing";
+      - name: check there are no other active releases
+        run: | 
+          export AR=$(gh variable get ACTIVE_RELEASE)
+          if [ $AR -ne "NONE" ]; then
+            echo "release $AR still active. finish or abort that one first"
             exit 1
           fi
         env: 
@@ -76,6 +76,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
+          gh veriable set ACTIVE_RELEASE --body "$NEW_VERSION"
           # # create release branch
           git pull # make sure git doesn't reject our push becasue of unknown refs
           git checkout -b "release/v$NEW_VERSION"
