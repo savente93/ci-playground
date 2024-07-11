@@ -99,6 +99,7 @@ jobs:
             git config user.email "<>"
 
             # create release branch
+            gh pr checkout "$PR_ID"
             git pull # make sure git doesn't reject our push becasue of unknown refs
             gh pr merge "$PR_ID"
             git pull
