@@ -6,12 +6,17 @@ on:
   push:
     branches:
       - 'release/**'
+  workflow_run: 
+    workflows: [Create a new release]
+    types: 
+      - completed
 
 jobs:
   pypi:
     runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.upload-pypi-release-artifacts.outputs.artifact-url }}
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.upload-docs-release-artifacts.outputs.artifact-url }}
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -75,6 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       url: ${{ steps.upload-docker-release-artifacts.outputs.artifact-url }}
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

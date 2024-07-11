@@ -11,15 +11,6 @@ on:
           - major
         default: minor
         description: "Is this a Major, Minor, or Patch release?"
-      target:
-        type: choice
-        description: "What branch should we merge to after the release?"
-        default: main
-        options:
-          - main
-          - v1
-          - release/v1-alpha
-
 jobs:
   build:
     defaults:
@@ -47,6 +38,7 @@ jobs:
       - name: setup release PR
         env:
           GH_TOKEN: ${{ github.token }}
+          BUMP_KIND: ${{ github.inputs.bump }}
         run: |
 
           set -e
@@ -145,10 +137,6 @@ jobs:
 
           fi
 
-          echo "Github does not allow workflows to be triggered from other workflows, so I can't start those for you" > comment.txt
-          echo "However, you can trigger them by executing the following commands:" >> comment.txt
-            echo "\`git fetch && git checkout release/v$NEW_VERSION && git commit --allow-empty -m \"Trigger artifact creation\" && git push\`. " >> comment.txt
-          gh pr comment "$PR_URL" --body-file comment.txt
 
 
           
