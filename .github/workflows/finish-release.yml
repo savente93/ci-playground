@@ -102,7 +102,7 @@ jobs:
             gh pr merge $PR_ID
             git pull
             git checkout main
-            git tag v$NEW_VERSION
+            git tag v$RELEASE_VERSION
             # post release stuff so we don't forget
             sed -i "s/v$RELEASE_VERSION/Unreleased\n==========\n\nNew\n---\n\nChanged\n-------\n\nFixed\n-----\n\nDeprecated\n----------\n\nv$RELEASE_VERSION/" docs/changelog.rst
             sed -i 's/__version__.*=.*"\(.*\)".*/__version__ = "\1.dev0"/' hydromt/__init__.py
@@ -110,7 +110,7 @@ jobs:
             git add hydromt/__init__.py docs/changelog.rst            
             git commit -m "Post release"
             git push "release/v$RELEASE_VERSION" origin
-            gh veriable set ACTIVE_RELEASE --body "NONE"
+            gh variable set ACTIVE_RELEASE --body "NONE"
           else
             echo "could not find release pr to merge"
             exit 1

@@ -76,7 +76,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
-          gh veriable set ACTIVE_RELEASE --body "$NEW_VERSION"
+          gh variable set ACTIVE_RELEASE --body "$NEW_VERSION"
           # # create release branch
           git pull # make sure git doesn't reject our push becasue of unknown refs
           git checkout -b "release/v$NEW_VERSION"
