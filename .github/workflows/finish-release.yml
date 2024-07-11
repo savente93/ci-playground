@@ -113,5 +113,5 @@ jobs:
             
             git add hydromt/__init__.py docs/changelog.rst            
             git commit -m "Post release v$RELEASE_VERSION"
-            git push main origin
+            git push 
 
