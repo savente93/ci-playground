@@ -38,7 +38,7 @@ jobs:
       - name: setup release PR
         env:
           GH_TOKEN: ${{ github.token }}
-          BUMP_KIND: ${{ github.inputs.bump }}
+          BUMP_KIND: ${{ inputs.bump }}
         run: |
 
           set -e
@@ -67,7 +67,7 @@ jobs:
           	;;
 
           *)
-          	echo "invalid bump"
+          	echo "invalid bump: $BUMP"
           	exit 1
           	;;
           esac
