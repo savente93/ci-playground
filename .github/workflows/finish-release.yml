@@ -103,6 +103,9 @@ jobs:
               echo "detection result: $RELEASE_VERSION"
               exit 1 # somthing went very wrong
             fi
+            ## seting up git
+            git config user.name "GitHub Actions Bot"
+            git config user.email "<>"
             git tag "v$RELEASE_VERSION"
             # post release stuff so we don't forget
             sed -i "s/v$RELEASE_VERSION/Unreleased\n==========\n\nNew\n---\n\nChanged\n-------\n\nFixed\n-----\n\nDeprecated\n----------\n\nv$RELEASE_VERSION/" docs/changelog.rst
