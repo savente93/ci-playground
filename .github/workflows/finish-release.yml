@@ -122,5 +122,5 @@ jobs:
             ' docs/changelog.rst > release_notes.rst
             git push 
             git push origin tag "v$RELEASE_VERSION"
-            gh create release "v$RELEASE_VERSION" -F release_notes.rst
+            gh release create "v$RELEASE_VERSION" -F release_notes.rst
 
