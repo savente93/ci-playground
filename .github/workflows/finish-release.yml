@@ -113,5 +113,14 @@ jobs:
             
             git add hydromt/__init__.py docs/changelog.rst            
             git commit -m "Post release v$RELEASE_VERSION"
+            awk '
+              BEGIN { capture = 0; }
+              # Match the first header and start capturing
+              /^v[0-9]+\.[0-9]+\.[0-9]+.*$/ { if (capture == 0) { capture = 1; } else { exit; } }
+              # Capture lines between headers
+              capture { print; }
+            ' docs/changelog.rst > release_notes.rst
             git push 
+            git push origin tag "v$RELEASE_VERSION"
+            gh create release "v$RELEASE_VERSION" -F release_notes.rst
 
