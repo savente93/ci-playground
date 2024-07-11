@@ -86,7 +86,7 @@ jobs:
       - publish-docs
     runs-on: ubuntu-latest        
     env:
-      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
       RELEASE_VERSION: ${{ vars.ACTIVE_RELEASE }}
     steps:
       - name: Merge release PR

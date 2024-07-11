@@ -37,8 +37,9 @@ jobs:
 
       - name: setup release PR
         env:
-          GH_TOKEN: ${{ github.token }}
-          BUMP_KIND: ${{ inputs.bump }}
+          BUMP_KIND: ${{ inputs.bump }}   
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+      
         run: |
 
           set -e
