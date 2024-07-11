@@ -84,7 +84,9 @@ jobs:
       - publish-docker
       - publish-pypi
       - publish-docs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest        
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Merge release PR
         run: | 
