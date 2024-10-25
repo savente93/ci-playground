@@ -1,0 +1,33 @@
+rules:
+  description-empty: 
+    level: error
+  subject-empty: 
+    level: error
+  type-empty: 
+    level: error
+  body-empty:
+    level: error
+  scope:
+    level: error
+    options:
+      - model-builder
+      - frontend
+      - backend
+      - database
+      - docs
+      - ci
+      - misc
+  scope-empty:
+    level: error
+  type:
+    level: error
+    options:
+      - feat
+      - fix
+      - chore
+      - revert 
+      - style
+      - refactor
+      - ci
+      - dep
+      - doc
