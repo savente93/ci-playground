@@ -9,6 +9,7 @@ rules:
     level: error
   scope:
     level: error
+    optional: false
     options:
       - model-builder
       - frontend
