@@ -9,11 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-      - name: Install conventional_commits_linter
+      - name: restore cache
+        id: cache-commitlint
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cargo/bin
+          key: commitlint
+      - name: install rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        if: steps.cache-commitlint.outputs.cache-hit != 'true'
+      - name: compile binary
+        if: steps.cache-commitlint.outputs.cache-hit != 'true'
+        run: | 
+          cargo install commitlint-rs
+      - uses: actions/cache/save@v4
+        with:
+          key: commitlint
+          path: ~/.cargo/bin
+      - name: Lint message
         env:
             PR_NUMBER: ${{ github.event.number }}
             GH_TOKEN: ${{ github.token }}
         run: |
-            cargo install conventional_commits_linter
-            gh pr view $PR_NUMBER --json title,body --jq ".title,.body" | conventional_commits_linter --from-stdin
+            # abuse commit_editmsg until https://github.com/KeisukeYamashita/commitlint-rs/issues/372 is fixed
+            gh pr view $PR_NUMBER --json title,body --jq ".title,.body" > ./.git/COMMIT_EDITMSG 
+            commitlint --edit
