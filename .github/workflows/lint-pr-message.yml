@@ -3,7 +3,6 @@ name: Linting PR description
 on:
   pull_request: 
     types: [opened, reopened, edited]
-  push:
 
 jobs:
   lint-description:
@@ -16,21 +15,7 @@ jobs:
         with:
           path: ~/.cargo/bin
           key: commitlint
-      - name: install rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        if: steps.cache-commitlint.outputs.cache-hit != 'true'
-      - name: compile binary
-        if: steps.cache-commitlint.outputs.cache-hit != 'true'
-        run: | 
-          cargo install commitlint-rs
-      - uses: actions/cache/save@v4
-        if: steps.cache-commitlint.outputs.cache-hit != 'true'
-        with:
-          key: commitlint
-          path: ~/.cargo/bin
       - name: Lint message
-        # only do this bit for actual PRs
-        if: contains(github.ref, 'refs/pull')
         env:
             PR_NUMBER: ${{ github.event.number }}
             GH_TOKEN: ${{ github.token }}
