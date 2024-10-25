@@ -3,8 +3,6 @@ rules:
     level: error
   subject-empty: 
     level: error
-  type-empty: 
-    level: error
   body-empty:
     level: error
   scope:
@@ -18,10 +16,9 @@ rules:
       - docs
       - ci
       - misc
-  scope-empty:
-    level: error
   type:
     level: error
+    optional: false
     options:
       - feat
       - fix
