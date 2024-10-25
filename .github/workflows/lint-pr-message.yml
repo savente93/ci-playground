@@ -3,6 +3,7 @@ name: Linting PR description
 on:
   pull_request: 
     types: [opened, reopened, edited]
+  push:
 
 jobs:
   lint-description:
@@ -23,10 +24,13 @@ jobs:
         run: | 
           cargo install commitlint-rs
       - uses: actions/cache/save@v4
+        if: steps.cache-commitlint.outputs.cache-hit != 'true'
         with:
           key: commitlint
           path: ~/.cargo/bin
       - name: Lint message
+        # only do this bit for actual PRs
+        if: contains(github.ref, 'refs/pull')
         env:
             PR_NUMBER: ${{ github.event.number }}
             GH_TOKEN: ${{ github.token }}
