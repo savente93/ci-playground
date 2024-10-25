@@ -1,0 +1,29 @@
+name: Compile and cache the binary for commit linting
+on:
+  workflow_dispatch:
+  schedule: 
+    - cron: "0 0 1 * *" 
+
+jobs:
+  lint-description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: restore cache
+        id: cache-commitlint
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cargo/bin
+          key: commitlint
+      - name: install rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+            cache: false
+      - name: compile binary
+        run: | 
+          cargo install commitlint-rs
+      - uses: actions/cache/save@v4
+        with:
+          key: commitlint
+          path: ~/.cargo/bin
+      
