@@ -20,6 +20,6 @@ jobs:
             PR_NUMBER: ${{ github.event.number }}
             GH_TOKEN: ${{ github.token }}
         run: |
-            # abuse commit_editmsg until https://github.com/KeisukeYamashita/commitlint-rs/issues/372 is fixed
-            gh pr view $PR_NUMBER --json title,body --jq ".title,.body" > ./.git/COMMIT_EDITMSG 
-            commitlint --edit
+            gh pr view $PR_NUMBER --json title,body --jq ".title,.body" > lint-message.txt
+            commitlint --edit lint-message.txt
+            
